@@ -21,12 +21,11 @@ class TimelineService
             $usuario_id = $request["usuario_id"];
 
             $cacheKey = "user:{$usuario_id}:timeline";
-
-            // Intentar obtener el timeline desde Redis
-            if (Redis::exists($cacheKey)) {
-                return json_decode(Redis::get($cacheKey));
+            $cachedTimeline = Redis::get($cacheKey);
+            if ($cachedTimeline !== null) {
+                return json_decode($cachedTimeline, true);
             }
-
+            
             $tweets = $this->timelineRepository->showTimeline($usuario_id);
 
             // Guardar en Redis por 10 minutos

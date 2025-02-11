@@ -13,7 +13,7 @@ class UnfollowUserRequest extends FormRequest
     {
         return [
             "follower_id" => "required|numeric|exists:usuarios,id",
-            "followed_id" => "required|numeric|exists:usuarios,id"
+            "followed_id" => "required|numeric|exists:usuarios,id|different:follower_id"
         ];
     }
 

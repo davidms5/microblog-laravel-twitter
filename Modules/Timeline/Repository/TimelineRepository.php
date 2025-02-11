@@ -10,6 +10,7 @@ class TimelineRepository
     public function showTimeline($usuario_id)
     {
         try {
+        
             $tweets = Tweet::with("usuarios")
             ->whereIn("usuario_id", function ($query) use ($usuario_id) {
                 $query->select("followed_id")

@@ -13,7 +13,7 @@ class FollowUserRequest extends FormRequest
     {
         return [
             "follower_id" => "required|numeric|exists:usuarios,id",
-            "followed_id" => "required|numeric|exists:usuarios,id"
+            "followed_id" => "required|numeric|exists:usuarios,id|different:follower_id"
         ];
     }
 
@@ -25,12 +25,4 @@ class FollowUserRequest extends FormRequest
         return true;
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            if($this->follower_id === $this->followed_id) {
-                $validator->errors()->add("followed_id", "no puedes seguirte a ti mismo");
-            }
-        });
-    }
 }

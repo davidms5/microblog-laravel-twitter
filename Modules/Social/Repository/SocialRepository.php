@@ -85,13 +85,10 @@ class SocialRepository
      */
     public function isFollowing($follower_id, $followed_id)
     {
-        try {
-          return Follow::where('follower_id', $follower_id)
-            ->where('followed_id', $followed_id)
-            ->exists();  
-        } catch (\Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
-        }
+       
+        return (bool) Follow::where('follower_id', $follower_id)
+        ->where('followed_id', $followed_id)
+        ->exists();  
         
     }
 

@@ -57,7 +57,7 @@ class SocialService
             $follower_id = $request["follower_id"];
             $followed_id = $request["followed_id"];
 
-            if($this->socialRepository->isFollowing($follower_id, $followed_id)) throw new Exception("no sigues a este usuario", 400);
+            if(!$this->socialRepository->isFollowing($follower_id, $followed_id)) throw new Exception("no sigues a este usuario", 400);
 
             $this->socialRepository->unfollowUsuario($follower_id, $followed_id);
 

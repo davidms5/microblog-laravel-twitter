@@ -12,7 +12,7 @@ class ShowTimelineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "usuario_id" => "required|numeric|usuarios,id"
+            "usuario_id" => "required|numeric|exists:usuarios,id"
         ];
     }
 
