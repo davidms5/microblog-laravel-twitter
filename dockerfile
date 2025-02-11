@@ -28,17 +28,13 @@ WORKDIR /var/www
 # Copiar archivos del proyecto
 COPY . .
 
-# Permisos de almacenamiento y cache
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# Crear directorios necesarios para Laravel y asignar permisos
+RUN mkdir -p /var/www/storage/framework/{sessions,views,cache} /var/www/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
+    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Instalar dependencias de Laravel
-RUN chmod 775 -R storage; \
-    composer install --no-dev
+RUN composer install --no-dev
 
-# Copiar el archivo de entorno TODO: poner esto en el neuvo readme a la hora de mortarlo: php artisan key:generate
-RUN cp .env.example .env
-
-# Limpiar caché de configuración y aplicación
-#RUN php artisan config:clear && php artisan cache:clear
 
 CMD ["php-fpm"]
